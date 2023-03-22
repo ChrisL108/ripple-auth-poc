@@ -46,7 +46,9 @@
           },
           write: {
             'roomState.users.$userId': true,
+            // TODO: make it required to always have a users object following the $resourceId to be able to dynamically check if users are part of that resource group
             'roomState.breakoutRooms.$resourceId.users.$anyId.muted': true,
+            'roomState.polls.$anyId.users.$userId': true,
           },
         }
       },
@@ -96,7 +98,6 @@
     for (const roleName in userRoles) {
       if (userRoles[roleName]) {
         const roleWritePermissions = permissionConfig.roles[roleName].permissions.write;
-        // console.log('rolePermissions: ', rolePermissions)
 
         // Check for the all-access wildcard
         if (roleWritePermissions['*']) {
@@ -104,9 +105,8 @@
         }
 
         for (const pattern in roleWritePermissions) {
-          const hasPattern = roleWritePermissions[pattern];
-          const matchesPattern = pathMatch(statePath, pattern, userId, resourceId);
-          if (hasPattern && matchesPattern) {
+          if (roleWritePermissions[pattern] &&
+            pathMatch(statePath, pattern, userId, resourceId)) {
             return true;
           }
         }
@@ -122,13 +122,13 @@
     userId?: null | string,
     resourceId?: null | string): boolean {
 
+    // [ 'roomState', 'users', '3', 'handRaised' ]
     const pathParts = path.split('.');
+    // [ 'roomState', 'users', '$userId' ]
     const patternParts = pattern.split('.');
 
     for (let i = 0; i < pathParts.length; i++) {
-      // [ 'roomState', 'users', '3', 'handRaised' ]
-      const pathPart = pathParts[i]; 
-      // [ 'roomState', 'users', '$userId' ]
+      const pathPart = pathParts[i];
       const patternPart = patternParts[i];
 
       if (

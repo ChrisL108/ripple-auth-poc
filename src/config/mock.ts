@@ -43,10 +43,17 @@ export const RoomRoot = {
     }
   },
   privateState: {
-    users: {
-      1: ['participant', 'poll'],
-      2: ['owner'],
-      3: ['participant'],
+    roles: {
+      "1": {
+        owner: true
+      },
+      "2": {
+        participant: true,
+        poll: true
+      },
+      "3": {
+        participant: true
+      }
     }
   },
 }
