@@ -251,28 +251,28 @@
 
 
   const AccessControl = require('accesscontrol');
-  // const ac = new AccessControl();
-  const ac = new AccessControl(convertToInitialGrants(permissionConfig));
+  const ac = new AccessControl();
+  // const ac = new AccessControl(convertToInitialGrants(permissionConfig));
 
   console.log(ac);
   console.log(ac.getGrants());
 
-  // ac.grant('owner')
-  //   .readAny('*')
-  //   .updateAny('*')
-  //   .createAny('*')
-  //   .deleteAny('*');
+  ac.grant('owner')
+    .readAny('*')
+    .updateAny('*')
+    .createAny('*')
+    .deleteAny('*');
 
-  // ac.grant('participant')
-  //   .readAny('roomState.*')
-  //   .readAny('chalkboardState.*')
-  //   .readAny('settingsState.*')
-  //   .updateOwn('roomState.users.$userId')
-  //   .updateOwn('roomState.breakoutRooms.$resourceId.users.$anyId.muted');
+  ac.grant('participant')
+    .readAny('roomState.*')
+    .readAny('chalkboardState.*')
+    .readAny('settingsState.*')
+    .updateOwn('roomState.users.$userId')
+  // .updateAny('roomState.breakoutRooms.$resourceId.users.$anyId.muted');
 
-  // ac.grant('poll')
-  //   .readAny('roomState.poll.*')
-  //   .updateOwn('roomState.poll.$resourceId.answers');
+  ac.grant('poll')
+    .readAny('roomState.poll.*')
+    .updateOwn('roomState.poll.$resourceId.answers');
 
 
   /* ==============================

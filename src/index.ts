@@ -48,6 +48,8 @@
             'roomState.users.$userId': true,
             // TODO: make it required to always have a users object following the $resourceId to be able to dynamically check if users are part of that resource group
             'roomState.breakoutRooms.$resourceId.users.$anyId.muted': true,
+            // could try something like this for user ids in non-statndard places?
+            'roomState.breakoutRooms.$resourceId.users.[roomState.users.$userId].muted': true,
             'roomState.polls.$anyId.users.$userId': true,
           },
         }
